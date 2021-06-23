@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import {} from "react-native-gesture-handler";
 import { categories } from "../../utils/categories";
 import { Category } from "../Category";
@@ -8,11 +8,13 @@ import { styles } from "./styles";
 
 interface CategorySelectProps {
   categorySelected: string;
+  hasCheckBox?: boolean;
   setCategory: (categoryId: string) => void;
 }
 
 export const CategorySelect = ({
   categorySelected,
+  hasCheckBox = false,
   setCategory,
 }: CategorySelectProps) => {
   return (
@@ -20,10 +22,11 @@ export const CategorySelect = ({
       horizontal
       style={styles.container}
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{ paddingHorizontal: 40 }}
+      contentContainerStyle={{ paddingHorizontal: 24 }}
     >
       {categories.map((category) => (
         <Category
+          hasCheckBox={hasCheckBox}
           key={category.id}
           title={category.title}
           icon={category.icon}

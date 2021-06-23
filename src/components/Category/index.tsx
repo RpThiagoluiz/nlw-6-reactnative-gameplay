@@ -11,12 +11,14 @@ interface CategoryProps extends RectButtonProps {
   title: string;
   icon: React.FC<SvgProps>; //Ele vai pra maiusculo, porq todo component comeca com letra maiuscula, e ele foi tipado como FC
   checked?: boolean;
+  hasCheckBox?: boolean;
 }
 
 export const Category = ({
   title,
   icon: Icon,
   checked = false,
+  hasCheckBox = false,
   ...rest
 }: CategoryProps) => {
   return (
@@ -25,12 +27,20 @@ export const Category = ({
         style={styles.container}
         colors={[theme.colors.secondary80, theme.colors.secondary100]}
       >
-        <View style={[styles.content, { opacity: checked ? 1 : 0.4 }]}>
-          <View style={checked ? styles.checked : styles.check} />
+        <LinearGradient
+          style={[styles.content, { opacity: checked ? 1 : 0.5 }]}
+          colors={[
+            checked ? theme.colors.secondary85 : theme.colors.secondary50,
+            theme.colors.secondary40,
+          ]}
+        >
+          {hasCheckBox && (
+            <View style={checked ? styles.checked : styles.check} />
+          )}
 
           <Icon width={48} height={48} />
           <Text style={styles.title}>{title}</Text>
-        </View>
+        </LinearGradient>
       </LinearGradient>
     </RectButton>
   );
