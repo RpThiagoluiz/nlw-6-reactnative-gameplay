@@ -4,7 +4,7 @@ import { theme } from "../../global/styles/theme";
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    justifyContent: "center",
   },
   header: {
     width: "100%",
@@ -14,9 +14,6 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: getStatusBarHeight() + 26,
     marginBottom: 42,
-  },
-  content: {
-    marginTop: 24,
   },
   matches: {
     marginTop: 24,

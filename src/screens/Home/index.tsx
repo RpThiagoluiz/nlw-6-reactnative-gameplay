@@ -31,14 +31,6 @@ export const Home = () => {
       description:
         "E hoje que vamos chegar ao challenger sem perder uma partida da md10",
     },
-    {
-      id: "45",
-      guild: { id: "1", name: "Lendarios", icon: null, owner: true },
-      category: "1",
-      date: "22/06 as 20:40h",
-      description:
-        "E hoje que vamos chegar ao challenger sem perder uma partida da md10",
-    },
   ];
 
   const { navigate } = useNavigation();
@@ -58,28 +50,31 @@ export const Home = () => {
 
   return (
     <Background>
-      <View style={styles.header}>
-        <Profile />
-        <ButtonAdd onPress={handleAppointmentCreate} />
-      </View>
-      <View>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Profile />
+          <ButtonAdd onPress={handleAppointmentCreate} />
+        </View>
+
         <CategorySelect
           categorySelected={category}
           setCategory={handleCategorySelect}
         />
-        <View style={styles.content}>
-          <ListHeader title="Partidas agendadas" subtitle="Total 6" />
-          <FlatList
-            data={appointments}
-            style={styles.matches}
-            showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => <ListDivider />}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <Appointment data={item} onPress={handleAppointment} />
-            )}
-          />
-        </View>
+
+        <ListHeader title="Partidas agendadas" subtitle="Total 6" />
+
+        <FlatList
+          data={appointments}
+          style={styles.matches}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <ListDivider />}
+          //ta dando um espaco a mais de respiro, ele ta na altura de 1
+          contentContainerStyle={{ paddingBottom: 69 }}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Appointment data={item} onPress={handleAppointment} />
+          )}
+        />
       </View>
     </Background>
   );

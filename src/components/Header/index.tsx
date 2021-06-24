@@ -32,7 +32,12 @@ export const Header = ({ title, action }: Props) => {
 
       <Text style={styles.title}>{title}</Text>
 
-      {action && <View>{action}</View>}
+      {action ? (
+        <View>{action}</View>
+      ) : (
+        //Somente para centralizar o texto.
+        <View style={{ width: 24 }}></View>
+      )}
     </LinearGradient>
   );
 };

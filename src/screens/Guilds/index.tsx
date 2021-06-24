@@ -29,6 +29,24 @@ export const Guilds = ({ handleGuildSelect }: Props) => {
       icon: "test.png",
       owner: true,
     },
+    {
+      id: "1000",
+      name: "Bola Gatos",
+      icon: "test.png",
+      owner: true,
+    },
+    {
+      id: "100000",
+      name: "Bola Gatos",
+      icon: "test.png",
+      owner: true,
+    },
+    {
+      id: "1100",
+      name: "Bola Gatos",
+      icon: "test.png",
+      owner: true,
+    },
   ];
 
   return (
@@ -36,7 +54,9 @@ export const Guilds = ({ handleGuildSelect }: Props) => {
       <FlatList
         data={guilds}
         keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={() => <ListDivider />}
+        ItemSeparatorComponent={() => <ListDivider isCentered />}
+        ListHeaderComponent={() => <ListDivider isCentered />}
+        contentContainerStyle={{ paddingVertical: 70 }}
         showsVerticalScrollIndicator={false}
         style={styles.guilds}
         renderItem={({ item }) => (
