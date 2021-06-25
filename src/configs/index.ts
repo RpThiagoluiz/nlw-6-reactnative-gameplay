@@ -1,1 +1,2 @@
-export * from "./discordAuth"
+export * from "./discordAuth";
+export * from "./storage";

@@ -6,8 +6,12 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { RectButton } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
+import uuid from "react-native-uuid";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { COLLECTION_APPOINTMENTS } from "../../configs";
 import { Header } from "../../components/Header";
 import { CategorySelect } from "../../components/CategorySelect";
 import { GuildIcon } from "../../components/GuildIcon";
@@ -28,6 +32,15 @@ export const AppointmentCreate = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [guild, setGuild] = useState<GuildProps>({} as GuildProps);
 
+  //Validar os campos!
+  const [day, setDay] = useState("");
+  const [month, setMonth] = useState("");
+  const [hour, setHour] = useState("");
+  const [minute, setMinute] = useState("");
+  const [description, setDescription] = useState("");
+
+  const { navigate } = useNavigation();
+
   const handleCategorySelect = (categoryId: string) => {
     //categoryId === category ? setCategory("") : setCategory(categoryId);
     //se ja tiver selecionado vc desmarca
@@ -45,6 +58,29 @@ export const AppointmentCreate = () => {
   const handleGuildSelect = (guildSelect: GuildProps) => {
     setGuild(guildSelect);
     setIsModalOpen(false);
+  };
+
+  const handleSubmit = async () => {
+    const newAppointment = {
+      id: uuid.v4(),
+      guild,
+      category,
+      date: `${day}/${month} ás ${hour}:${minute}`,
+      description,
+    };
+
+    //Send to one backEnd ?!
+
+    //Pegar os que tem
+    const storage = await AsyncStorage.getItem(COLLECTION_APPOINTMENTS);
+
+    const appointments = storage ? JSON.parse(storage) : [];
+
+    await AsyncStorage.setItem(
+      COLLECTION_APPOINTMENTS,
+      JSON.stringify([...appointments, newAppointment])
+    );
+    navigate("Home");
   };
 
   return (
@@ -75,7 +111,11 @@ export const AppointmentCreate = () => {
           <View style={styles.form}>
             <RectButton onPress={handleOpenGuilds}>
               <View style={styles.select}>
-                {guild.icon ? <GuildIcon /> : <View style={styles.noImage} />}
+                {guild.icon ? (
+                  <GuildIcon guildId={guild.id} iconId={guild.icon} />
+                ) : (
+                  <View style={styles.noImage} />
+                )}
 
                 <View style={styles.selectBody}>
                   <Text style={styles.label}>
@@ -97,9 +137,9 @@ export const AppointmentCreate = () => {
                   Dia e mês
                 </Text>
                 <View style={styles.column}>
-                  <InputSmall maxLength={2} />
+                  <InputSmall maxLength={2} onChangeText={setDay} />
                   <Text style={styles.divider}>/</Text>
-                  <InputSmall maxLength={2} />
+                  <InputSmall maxLength={2} onChangeText={setMonth} />
                 </View>
               </View>
 
@@ -109,9 +149,9 @@ export const AppointmentCreate = () => {
                 </Text>
 
                 <View style={styles.column}>
-                  <InputSmall maxLength={2} />
+                  <InputSmall maxLength={2} onChangeText={setHour} />
                   <Text style={styles.divider}>:</Text>
-                  <InputSmall maxLength={2} />
+                  <InputSmall maxLength={2} onChangeText={setMinute} />
                 </View>
               </View>
             </View>
@@ -126,10 +166,11 @@ export const AppointmentCreate = () => {
                 maxLength={100}
                 numberOfLines={5}
                 autoCorrect={false}
+                onChangeText={setDescription}
               />
             </View>
             <View style={styles.footer}>
-              <Button text="Agendar" />
+              <Button text="Agendar" onPress={handleSubmit} />
             </View>
           </View>
         </ScrollView>
