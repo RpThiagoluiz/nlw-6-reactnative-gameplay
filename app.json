@@ -5,11 +5,11 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme":"gameplay",
+    "scheme": "gameplay",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#171b3b"
+      "backgroundColor": "#9966FF"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
